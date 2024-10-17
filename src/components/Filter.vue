@@ -5,21 +5,13 @@
     <div class="filter-sizes">
       <h2 class="me-2">سایز</h2>
       <div class="filter-item">
-        <SelectSizeComponent
-          :sizes="sizes"
-          @update:selectedSize="handleSelectedSize"
-          :on-size="onSize"
-        />
+        <SelectSizeComponent :sizes="sizes" v-model="selected.size" />
       </div>
     </div>
     <div class="filter-color not-first-filter">
       <h2 class="me-2">رنگ</h2>
       <div class="filter-item">
-        <SelectColorComponent
-          :colors="colors"
-          @update:selectedColor="handleSelectedColor"
-          :on-color="onColor"
-        />
+        <SelectColorComponent v-model="selected.color" :colors="colors" />
       </div>
     </div>
     <div class="avaiable">
@@ -63,46 +55,26 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  "update:selectedColor",
-  "update:selectedSize",
-  "update:availableOnly",
-  "applyFilter",
-]);
+const emit = defineEmits(["update:selected", "update:availableOnly", "applyFilter"]);
 
 const availableOnly = ref(props.availableOnly);
-const selectedColor = ref(props.onColor || "");
-const selectedSize = ref(props.onSize || "");
+const selected = ref({
+  color: props.onColor || "",
+  size: props.onSize || "",
+});
 
-const handleSelectedColor = (color) => {
-  selectedColor.value = color;
-  emit("update:selectedColor", color);
-};
-
-const handleSelectedSize = (size) => {
-  selectedSize.value = size;
-  emit("update:selectedSize", size);
-};
+watch(
+  selected,
+  (newSelected) => {
+    emit("update:selected", newSelected);
+  },
+  { deep: true }
+);
 
 const applyFilter = () => {
   emit("update:availableOnly", availableOnly.value);
   emit("applyFilter");
 };
-
-// Watch for changes in props and update internal state
-watch(
-  () => props.onColor,
-  (newColor) => {
-    selectedColor.value = newColor;
-  }
-);
-
-watch(
-  () => props.onSize,
-  (newSize) => {
-    selectedSize.value = newSize;
-  }
-);
 </script>
 
 <style lang="css" scoped>

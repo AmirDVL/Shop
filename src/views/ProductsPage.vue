@@ -17,15 +17,17 @@ const sort = ref("");
 const colors = ref([]);
 const sizes = ref([]);
 const availableOnly = ref(false);
-const selectedColor = ref("");
-const selectedSize = ref("");
+const selected = ref({
+  color: "",
+  size: "",
+});
 const options = { method: 'GET' };
 
-const fetchProducts = async (page, sortValue, color, size, available) => {
+const fetchProducts = async (page, sortValue, selected, available) => {
   try {
     let url = `https://demo.spreecommerce.org/api/v2/storefront/products?per_page=12&include=product_properties%2Cimages&page=${page}${sortValue}`;
-    if (color) url += `&filter[options][color]=${color}`;
-    if (size) url += `&filter[options][size]=${size}`;
+    if (selected.color) url += `&filter[options][color]=${selected.color}`;
+    if (selected.size) url += `&filter[options][size]=${selected.size}`;
     if (available) url += `&filter[available]=true`;
     console.log(url);
     const response = await fetch(url, options);
@@ -64,6 +66,7 @@ const fetchProducts = async (page, sortValue, color, size, available) => {
 const updateSort = (newSortValue) => {
   sort.value = newSortValue;
   activeSort.value = newSortValue;
+  applyFilter(); // Fetch products with the new sort value
 };
 
 // Method to update the current page
@@ -75,11 +78,11 @@ const updatePage = (newPage) => {
 // Method to apply filters
 const applyFilter = () => {
   isLoading.value = true;
-  fetchProducts(currentPage.value, sort.value, selectedColor.value, selectedSize.value, availableOnly.value);
+  fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
 };
 
 onBeforeMount(() => {
-  fetchProducts(currentPage.value, sort.value, selectedColor.value, selectedSize.value, availableOnly.value);
+  fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
 });
 </script>
 
@@ -95,12 +98,11 @@ onBeforeMount(() => {
             :colors="colors"
             :sizes="sizes"
             :availableOnly="availableOnly"
-            @update:selectedColor="selectedColor = $event"
-            @update:selectedSize="selectedSize = $event"
+            @update:selected="selected = $event"
             @update:availableOnly="availableOnly = $event"
             @applyFilter="applyFilter"
-            :on-color="selectedColor"
-            :on-size="selectedSize"
+            :on-color="selected.color"
+            :on-size="selected.size"
           />
         </div>
         <div class="col-9">

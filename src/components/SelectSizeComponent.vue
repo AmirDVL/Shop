@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <select v-model="selectedSize" @change="emitSelectedSize">
+    <select :value="onSize" @change="emitSelectedSize">
       <option value="">--انتخاب کنید--</option>
       <option v-for="size in sizes" :key="size" :value="size">
         {{ size }}
@@ -8,8 +8,9 @@
     </select>
   </div>
 </template>
+
 <script setup>
-import { defineProps, ref, defineEmits, watch, onMounted } from "vue";
+import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   sizes: {
@@ -23,23 +24,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:selectedSize"]);
-const selectedSize = ref("");
 
-const emitSelectedSize = () => {
-  emit("update:selectedSize", selectedSize.value);
+const emitSelectedSize = (event) => {
+  emit("update:selectedSize", event.target.value);
 };
-
-watch(
-  () => props.onSize,
-  (newSize) => {
-    selectedSize.value = newSize;
-  }
-);
-onMounted(() => {
-  selectedSize.value = props.onSize || "";
-});
 </script>
-<style lang="css" scoped>
+
+<style scoped>
 .select {
   margin-top: 1rem;
 }

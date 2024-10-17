@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <select v-model="selectedColor" @change="emitSelectedColor">
+    <select v-model="modelValue">
       <option value="">--انتخاب کنید--</option>
       <option v-for="color in colors" :key="color" :value="color">
         {{ color }}
@@ -10,34 +10,18 @@
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits, watch, onMounted } from "vue";
+import { defineProps, defineModel } from "vue";
 
 const props = defineProps({
   colors: {
     type: Array,
     required: true,
   },
-  onColor: {
-    type: String,
-    required: false,
-  },
 });
 
-const emit = defineEmits(["update:selectedColor"]);
-const selectedColor = ref("");
-
-const emitSelectedColor = () => {
-  emit("update:selectedColor", selectedColor.value);
-};
-
-watch(
-  () => props.onColor,
-  (newColor) => {
-    selectedColor.value = newColor;
-  }
-);
-onMounted(() => {
-  selectedColor.value = props.onColor || "";
+const modelValue = defineModel({
+  prop: "modelValue",
+  event: "update:modelValue",
 });
 </script>
 
