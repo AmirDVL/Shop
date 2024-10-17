@@ -1,5 +1,6 @@
 <script setup lang="js">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import HeadComponent from "../components/HeadComponent.vue";
 import MainMenu from "../components/MainMenu.vue";
 import ProductDisplay from "../components/ProductDisplay.vue";
@@ -7,6 +8,9 @@ import PaginationComponentV2 from '@/components/PaginationComponentV2.vue';
 import SpinnerComponent from '../components/SpinnerComponent.vue';
 import SortItem from '@/components/SortItem.vue';
 import Filter from '@/components/Filter.vue';
+
+const router = useRouter();
+const route = useRoute();
 
 const products = ref([]);
 const isLoading = ref(true);
@@ -18,16 +22,16 @@ const colors = ref([]);
 const sizes = ref([]);
 const availableOnly = ref(false);
 const selected = ref({
-  color: "",
-  size: "",
+  color: [],
+  size: [],
 });
 const options = { method: 'GET' };
 
 const fetchProducts = async (page, sortValue, selected, available) => {
   try {
     let url = `https://demo.spreecommerce.org/api/v2/storefront/products?per_page=12&include=product_properties%2Cimages&page=${page}${sortValue}`;
-    if (selected.color) url += `&filter[options][color]=${selected.color}`;
-    if (selected.size) url += `&filter[options][size]=${selected.size}`;
+    if (selected.color.length) url += `&filter[options][color]=${selected.color.join(',')}`;
+    if (selected.size.length) url += `&filter[options][size]=${selected.size.join(',')}`;
     if (available) url += `&filter[available]=true`;
     console.log(url);
     const response = await fetch(url, options);
@@ -79,7 +83,30 @@ const updatePage = (newPage) => {
 const applyFilter = () => {
   isLoading.value = true;
   fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
+  updateQueryParams();
 };
+
+// Method to update the URL with query parameters
+const updateQueryParams = () => {
+  const query = {
+    page: currentPage.value,
+    sort: sort.value,
+    color: selected.value.color.join(','),
+    size: selected.value.size.join(','),
+    available: availableOnly.value,
+  };
+  router.push({ query });
+};
+
+// Watch for changes in the route query parameters
+watch(route, (newRoute) => {
+  currentPage.value = parseInt(newRoute.query.page) || 1;
+  sort.value = newRoute.query.sort || '';
+  selected.value.color = newRoute.query.color ? newRoute.query.color.split(',') : [];
+  selected.value.size = newRoute.query.size ? newRoute.query.size.split(',') : [];
+  availableOnly.value = newRoute.query.available === 'true';
+  fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
+}, { immediate: true });
 
 onBeforeMount(() => {
   fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
@@ -154,7 +181,6 @@ onBeforeMount(() => {
 
 <style>
 @import url("https://cdn.viraweb123.ir/api/v2/cdn/libs/iranyekan@1.0.0/Variable%20Font/");
-/* Add any styles specific to ProductsPage here */
 .active {
   border-bottom: 2px solid #a72f3b;
 }

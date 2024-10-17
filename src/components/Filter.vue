@@ -1,6 +1,10 @@
 <template>
   <div class="wrap" dir="rtl">
-    <h2 class="section-name me-2">فیلترها</h2>
+    <div class="section-name">
+      <h2 class="sect-name me-2">فیلترها</h2>
+      <span class="text-danger" @click="deleteEmitter"> حذف فیلتر</span>
+    </div>
+    <hr />
     <h2 class="btn btn"></h2>
     <div class="filter-sizes">
       <h2 class="me-2">سایز</h2>
@@ -8,18 +12,26 @@
         <SelectionComponent :items="sizes" v-model="selected.size" />
       </div>
     </div>
+    <hr />
     <div class="filter-color not-first-filter">
       <h2 class="me-2">رنگ</h2>
       <div class="filter-item">
         <SelectionComponent v-model="selected.color" :items="colors" />
       </div>
     </div>
-    <div class="avaiable">
-      <q-checkbox
-        v-model="availableOnly"
-        label="فقط کالاهای موجود"
-        style="flex-wrap: wrap !important"
-      />
+    <hr />
+    <div class="avaiable" dir="rtl">
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+          v-model="availableOnly"
+          @change="updateAvailableOnly"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault">فقط محصولات موجود</label>
+      </div>
     </div>
     <div class="filter-button">
       <q-btn unelevated rounded color="primary" label="اعمال فیلتر" @click="applyFilter" />
@@ -28,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, watch } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 import SelectionComponent from "./SelectionComponent.vue";
 
 const props = defineProps({
@@ -45,11 +57,11 @@ const props = defineProps({
     required: true,
   },
   onColor: {
-    type: String,
+    type: Array,
     required: false,
   },
   onSize: {
-    type: String,
+    type: Array,
     required: false,
   },
 });
@@ -58,19 +70,20 @@ const emit = defineEmits(["update:selected", "update:availableOnly", "applyFilte
 
 const availableOnly = ref(props.availableOnly);
 const selected = ref({
-  color: props.onColor || "",
-  size: props.onSize || "",
+  color: props.onColor || [],
+  size: props.onSize || [],
 });
 
-watch(
-  selected,
-  (newSelected) => {
-    emit("update:selected", newSelected);
-  },
-  { deep: true }
-);
+const deleteEmitter = () => {
+  emit("update:selected", { color: [], size: [] });
+};
+
+const updateAvailableOnly = () => {
+  emit("update:availableOnly", availableOnly.value);
+};
 
 const applyFilter = () => {
+  emit("update:selected", selected.value);
   emit("update:availableOnly", availableOnly.value);
   emit("applyFilter");
 };
@@ -95,14 +108,17 @@ const applyFilter = () => {
   width: 100%;
   box-sizing: border-box;
   font-family: "IranYekanXVF", sans-serif;
-  background-color: rgb(246, 246, 246);
+  background-color: white;
+  padding: 14px;
+  font-size: 1rem;
   border-radius: 10px;
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
-.section-name {
-  font-size: 3rem;
+.sect -name {
+  font-size: 1rem;
   margin-bottom: 1rem;
   font-weight: 700;
   margin-top: 1rem;
@@ -112,10 +128,29 @@ const applyFilter = () => {
   margin-top: 2rem;
 }
 .filter-item {
-  width: calc(100% - 7rem);
+  width: calc(100% - 4rem);
+}
+
+span:hover {
+  cursor: pointer;
 }
 
 .filter-sizes {
   width: 100%;
+}
+hr {
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.filter-button {
+  margin-top: 1rem;
 }
 </style>
