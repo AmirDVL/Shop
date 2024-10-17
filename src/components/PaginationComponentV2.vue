@@ -1,10 +1,28 @@
+<template>
+  <div class="q-pa-lg flex flex-center">
+    <slot></slot>
+    <q-pagination
+      v-model="internalPage"
+      color="purple"
+      :max="totalPages"
+      :min="1"
+      :max-pages="6"
+      boundary-numbers
+      ellipses
+      size="1.5rem"
+      :round="true"
+    />
+    <slot name="footer" v-bind="{ totalPages }"></slot>
+  </div>
+</template>
+
 <script setup>
 import { ref, watch } from "vue";
 import { QPagination } from "quasar";
 
 // Define props
 const props = defineProps({
-  currentPage: {
+  modelValue: {
     type: Number,
     required: true,
   },
@@ -12,44 +30,27 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  url: {
-    type: String,
-    required: true,
-  },
 });
 
 // Define emits
-const emit = defineEmits(["updatePage"]);
+const emit = defineEmits(["update:modelValue"]);
 
-// Reactive currentPage
-const currentPage = ref(props.currentPage);
+// Internal reactive state for the current page
+const internalPage = ref(props.modelValue);
 
-// Watch for changes in currentPage
-watch(currentPage, (newPage) => {
-  emit("updatePage", newPage);
+// Watch for changes in the internalPage and emit the update event
+watch(internalPage, (newPage) => {
+  emit("update:modelValue", newPage);
 });
 
-// Method to update the page
-const updatePage = (newPage) => {
-  currentPage.value = newPage;
-};
+// Watch for changes in the modelValue prop and update the internalPage
+watch(
+  () => props.modelValue,
+  (newPage) => {
+    internalPage.value = newPage;
+  }
+);
 </script>
-
-<template>
-  <div class="q-pa-lg flex flex-center">
-    <q-pagination
-      model-value="currentPage"
-      color="purple"
-      :max="totalPages"
-      :min="1"
-      :max-pages="6"
-      boundary-numbers
-      @update:model-value="updatePage"
-      ellipses="true"
-      direction-links="true"
-    />
-  </div>
-</template>
 
 <style scoped>
 .q-pa-lg {

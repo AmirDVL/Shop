@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="row">
     <header>
-      <div class="icon-box">
+      <div class="icon-box col-2">
         <div class="logo">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +137,7 @@
           </svg>
         </div>
       </div>
-      <div class="search-bar">
+      <div class="search-bar col-6">
         <input type="text" placeholder="استیکر" />
         <div class="search-logo">
           <svg
@@ -158,7 +158,7 @@
           </svg>
         </div>
       </div>
-      <div class="login-cart">
+      <div class="login-cart col-4">
         <div class="login">
           <div class="log-icon">
             <svg
@@ -178,7 +178,7 @@
               />
             </svg>
           </div>
-          <h3>ورود | ثبت نام</h3>
+          <h3 class="fs-3">ورود | ثبت نام</h3>
         </div>
         <div class="shopping-cart">
           <div class="cart">
@@ -208,7 +208,7 @@
             </svg>
             <span>0</span>
           </div>
-          <h3>سبد خرید</h3>
+          <h3 class="fs-3">سبد خرید</h3>
         </div>
       </div>
     </header>
@@ -235,8 +235,6 @@ header {
   display: flex;
   width: 100%;
   height: 6.5rem;
-  padding: 0 1.5rem;
-  gap: 1.5rem;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
@@ -247,13 +245,11 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.25rem;
 }
 .brand-name {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 8.43188rem;
   height: 3.17319rem;
 }
 .customi {
@@ -261,13 +257,11 @@ header {
   flex-shrink: 0;
 }
 .shop-text {
-  width: 5.28225rem;
   height: 0.944rem;
   flex-shrink: 0;
   margin-right: 0.58rem;
 }
 .logo {
-  width: 3.125rem;
   height: 3.125rem;
 }
 .search-bar {
@@ -276,7 +270,6 @@ header {
   padding: 0.6875rem 1.5rem;
   justify-content: center;
   align-items: center;
-  gap: 30.0625rem;
   border-radius: 1rem;
   border: 1px solid var(--Neutral-Gray-4, #d6d6d6);
 }
@@ -300,7 +293,6 @@ header {
 
 .search-logo {
   display: flex;
-  width: 1.5rem;
   height: 1.5rem;
   justify-content: center;
   align-items: center;
@@ -315,7 +307,6 @@ header {
 }
 
 .search-logo svg {
-  width: 1.5rem;
   height: 1.5rem;
 }
 .login-cart {
@@ -331,9 +322,6 @@ header {
   align-items: center;
   padding: 0.725rem;
   text-align: center;
-}
-.log-icon {
-  margin-left: 0.5rem;
 }
 .log-icon:hover {
   cursor: pointer;

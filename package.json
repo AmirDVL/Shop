@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@quasar/extras": "^1.16.12",
     "bootstrap": "^5.3.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -17,7 +18,8 @@
     "radix-vue": "^1.9.6",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
-    "vue": "^3.5.10"
+    "vue": "^3.5.10",
+    "vue-material-design-icons": "^5.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
