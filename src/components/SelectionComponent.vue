@@ -2,8 +2,8 @@
   <div class="select">
     <select v-model="modelValue">
       <option value="">--انتخاب کنید--</option>
-      <option v-for="color in colors" :key="color" :value="color">
-        {{ color }}
+      <option v-for="item in items" :key="item" :value="item">
+        {{ item }}
       </option>
     </select>
   </div>
@@ -13,7 +13,7 @@
 import { defineProps, defineModel } from "vue";
 
 const props = defineProps({
-  colors: {
+  items: {
     type: Array,
     required: true,
   },

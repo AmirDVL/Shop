@@ -5,13 +5,13 @@
     <div class="filter-sizes">
       <h2 class="me-2">سایز</h2>
       <div class="filter-item">
-        <SelectSizeComponent :sizes="sizes" v-model="selected.size" />
+        <SelectionComponent :items="sizes" v-model="selected.size" />
       </div>
     </div>
     <div class="filter-color not-first-filter">
       <h2 class="me-2">رنگ</h2>
       <div class="filter-item">
-        <SelectColorComponent v-model="selected.color" :colors="colors" />
+        <SelectionComponent v-model="selected.color" :items="colors" />
       </div>
     </div>
     <div class="avaiable">
@@ -29,8 +29,7 @@
 
 <script setup>
 import { ref, defineProps, defineEmits, watch } from "vue";
-import SelectColorComponent from "./SelectColorComponent.vue";
-import SelectSizeComponent from "./SelectSizeComponent.vue";
+import SelectionComponent from "./SelectionComponent.vue";
 
 const props = defineProps({
   colors: {
