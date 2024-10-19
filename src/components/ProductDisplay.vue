@@ -1,30 +1,34 @@
 <template>
-  <div class="my-card col-sm-6 col-md-4 col-xm-12 flex">
-    <div class="pic">
-      <img :src="image" :alt="name" />
-    </div>
-    <div class="info">
-      <div class="first-row-card">
-        <h2 class="fs-6 mw-50 w-25">{{ name }}</h2>
-        <span class="favorite">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="25"
-            viewBox="0 0 24 25"
-            fill="none"
-          >
-            <path
-              d="M12 22.1516C11.69 22.1516 11.39 22.1116 11.14 22.0216C7.32 20.7116 1.25 16.0616 1.25 9.19156C1.25 5.69156 4.08 2.85156 7.56 2.85156C9.25 2.85156 10.83 3.51156 12 4.69156C13.17 3.51156 14.75 2.85156 16.44 2.85156C19.92 2.85156 22.75 5.70156 22.75 9.19156C22.75 16.0716 16.68 20.7116 12.86 22.0216C12.61 22.1116 12.31 22.1516 12 22.1516ZM7.56 4.35156C4.91 4.35156 2.75 6.52156 2.75 9.19156C2.75 16.0216 9.32 19.8216 11.63 20.6116C11.81 20.6716 12.2 20.6716 12.38 20.6116C14.68 19.8216 21.26 16.0316 21.26 9.19156C21.26 6.52156 19.1 4.35156 16.45 4.35156C14.93 4.35156 13.52 5.06156 12.61 6.29156C12.33 6.67156 11.69 6.67156 11.41 6.29156C10.48 5.05156 9.08 4.35156 7.56 4.35156Z"
-              fill="#434343"
-            />
-          </svg>
-        </span>
+  <div class="col-sm-6 col-md-4 col-xm-12 flex">
+    <div class="my-card">
+      <div class="pic">
+        <img :src="image" :alt="name" />
       </div>
+      <div class="info">
+        <div class="first-row-card">
+          <h2 class="fs-6">{{ name }}</h2>
+          <button>
+            <span class="favorite">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="none"
+              >
+                <path
+                  d="M12 22.1516C11.69 22.1516 11.39 22.1116 11.14 22.0216C7.32 20.7116 1.25 16.0616 1.25 9.19156C1.25 5.69156 4.08 2.85156 7.56 2.85156C9.25 2.85156 10.83 3.51156 12 4.69156C13.17 3.51156 14.75 2.85156 16.44 2.85156C19.92 2.85156 22.75 5.70156 22.75 9.19156C22.75 16.0716 16.68 20.7116 12.86 22.0216C12.61 22.1116 12.31 22.1516 12 22.1516ZM7.56 4.35156C4.91 4.35156 2.75 6.52156 2.75 9.19156C2.75 16.0216 9.32 19.8216 11.63 20.6116C11.81 20.6716 12.2 20.6716 12.38 20.6116C14.68 19.8216 21.26 16.0316 21.26 9.19156C21.26 6.52156 19.1 4.35156 16.45 4.35156C14.93 4.35156 13.52 5.06156 12.61 6.29156C12.33 6.67156 11.69 6.67156 11.41 6.29156C10.48 5.05156 9.08 4.35156 7.56 4.35156Z"
+                  fill="#434343"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
 
-      <div class="desc" dir="ltr">
-        <!-- <p>{{ description }}</p> -->
-        <p class="price">{{ price }} تومان</p>
+        <div class="desc" dir="ltr">
+          <!-- <p>{{ description }}</p> -->
+          <p class="price">{{ price }} تومان</p>
+        </div>
       </div>
     </div>
   </div>
@@ -82,7 +86,7 @@ defineProps({
 }
 
 h2 {
-  white-space: nowrap;
+  line-height: 2rem;
 }
 
 .pic img {
@@ -103,6 +107,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .first-row-card:nth-child(-n + 2) {
@@ -114,5 +119,10 @@ h2 {
   flex-direction: column;
   align-items: space-between;
   justify-content: flex-start;
+}
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 </style>

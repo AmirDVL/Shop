@@ -178,7 +178,7 @@
               />
             </svg>
           </div>
-          <h3 class="fs-3">ورود | ثبت نام</h3>
+          <h3 class="sabt">ورود | ثبت نام</h3>
         </div>
         <div class="shopping-cart">
           <div class="cart">
@@ -208,7 +208,7 @@
             </svg>
             <span>0</span>
           </div>
-          <h3 class="fs-3">سبد خرید</h3>
+          <h3 class="sabt">سبد خرید</h3>
         </div>
       </div>
     </header>
@@ -239,7 +239,6 @@ header {
   align-items: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  margin-bottom: 5rem;
 }
 .icon-box {
   display: flex;
@@ -281,7 +280,7 @@ header > * {
 .search-bar input {
   position: relative;
   color: var(--red-p, #a72f3b);
-  text-align: center;
+  outline: none;
   font-family: "IRANYekanXVF", sans-serif;
   font-size: 0.875rem;
   font-style: normal;
@@ -301,6 +300,10 @@ header > * {
   justify-content: center;
   align-items: center;
   transition: 0.3s ease-in-out;
+}
+
+.sabt {
+  font-size: 0.875rem;
 }
 .search-logo svg:hover {
   cursor: pointer;
@@ -335,6 +338,12 @@ h3 {
   cursor: pointer;
   filter: invert(31%) sepia(100%) saturate(7496%) hue-rotate(357deg) brightness(104%) contrast(104%);
 }
+
+.log-icon {
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
 h3 {
   font-family: "IRANYekanXVF";
 }
@@ -350,6 +359,7 @@ h3 {
   position: relative;
   align-items: center;
   padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .cart svg:hover {
   cursor: pointer;

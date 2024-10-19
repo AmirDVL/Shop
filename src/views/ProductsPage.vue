@@ -12,14 +12,14 @@ import Filter from '@/components/Filter.vue';
 const router = useRouter();
 const route = useRoute();
 
-const allData = ref({});
+const defaultSort = ''; // Define the default sorting option as an empty string
+const activeSort = ref(defaultSort); // Initialize activeSort with the default sorting option
+const sort = ref(defaultSort); // Initialize sort with the default sorting option
 
 const products = ref([]);
 const isLoading = ref(true);
 const totalPages = ref();
 const currentPage = ref(1);
-const activeSort = ref('');
-const sort = ref("");
 const filters = ref({});
 const availableOnly = ref(false);
 const selected = ref({});
@@ -28,7 +28,12 @@ const options = { method: 'GET' };
 
 const fetchProducts = async (page, sortValue, selectedFilters, available) => {
   try {
-    let url = `https://demo.spreecommerce.org/api/v2/storefront/products?per_page=12&include=product_properties%2Cimages&page=${page}${sortValue}`;
+    let url = `https://demo.spreecommerce.org/api/v2/storefront/products?per_page=12&include=product_properties%2Cimages&page=${page}`;
+
+    // Add sort value to the URL if it's not the default sort
+    if (sortValue) {
+      url += sortValue;
+    }
 
     // Add dynamic filters to the URL
     Object.keys(selectedFilters).forEach(filterKey => {
@@ -41,7 +46,6 @@ const fetchProducts = async (page, sortValue, selectedFilters, available) => {
     console.log(url);
     const response = await fetch(url, options);
     const data = await response.json();
-    allData.value=data;
     console.log(data);
     isLoading.value = false;
     totalPages.value = data.meta.total_pages;
@@ -102,13 +106,18 @@ const applyFilter = () => {
 const updateQueryParams = () => {
   const query = {
     page: currentPage.value,
-    sort: sort.value,
     ...Object.keys(selected.value).reduce((acc, key) => {
       acc[key] = selected.value[key].join(',');
       return acc;
     }, {}),
     available: availableOnly.value
   };
+
+  // Add sort to the query if it's not the default sort
+  if (sort.value) {
+    query.sort = sort.value;
+  }
+
   router.push({ query });
 };
 
@@ -121,7 +130,8 @@ const clearFilters = () => {
 
 watch(route, (newRoute) => {
   currentPage.value = parseInt(newRoute.query.page) || 1;
-  sort.value = newRoute.query.sort || '';
+  sort.value = newRoute.query.sort || defaultSort;
+  activeSort.value = sort.value; // Ensure activeSort is updated
   Object.keys(filters.value).forEach(filterKey => {
     selected.value[filterKey] = newRoute.query[filterKey] ? newRoute.query[filterKey].split(',') : [];
   });
@@ -156,10 +166,18 @@ onBeforeMount(() => {
           <div class="row">
             <div class="col-2">
               <SortItem
+                sortValue=""
+                textValue="پیش فرض"
+                @update-sort="updateSort"
+                :isActive="activeSort === ''"
+              />
+            </div>
+            <div class="col-2">
+              <SortItem
                 sortValue="&sort=price"
                 textValue="ارزان ترین"
                 @update-sort="updateSort"
-                :isActive="activeSort === '&sort=-updated_at'"
+                :isActive="activeSort === '&sort=price'"
               />
             </div>
             <div class="col-2">
@@ -167,7 +185,7 @@ onBeforeMount(() => {
                 sortValue="&sort=-price"
                 textValue="گران ترین"
                 @update-sort="updateSort"
-                :isActive="activeSort === '&sort=-updated_at'"
+                :isActive="activeSort === '&sort=-price'"
               />
             </div>
             <div class="col-2">
@@ -202,7 +220,7 @@ onBeforeMount(() => {
 <style>
 @import url("https://cdn.viraweb123.ir/api/v2/cdn/libs/iranyekan@1.0.0/Variable%20Font/");
 .active {
-  border-bottom: 2px solid #a72f3b;
+  border-bottom: 2px solid #a72f3b !important;
 }
 
 #items > * {
