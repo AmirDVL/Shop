@@ -6,6 +6,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+
 const props = defineProps({
   sortValue: {
     type: String,
@@ -17,7 +18,6 @@ const props = defineProps({
   },
   isActive: {
     type: Boolean,
-    default: false,
     required: true,
   },
 });
@@ -51,7 +51,6 @@ const emitSortValue = () => {
   border: none;
   font-size: 1rem;
   font-family: "IRANYekanXVF";
-  border-bottom: 2px solid white;
   background: white;
 }
 .sort-item button:hover {

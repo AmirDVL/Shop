@@ -1,25 +1,21 @@
 <template>
   <div class="wrap" dir="rtl">
-    <div class="section-name">
+    <div class="section-name w-100">
       <h2 class="sect-name me-2">فیلترها</h2>
       <span class="text-danger" @click="deleteEmitter"> حذف فیلتر</span>
     </div>
     <hr />
-    <h2 class="btn btn"></h2>
-    <div class="filter-sizes">
-      <h2 class="me-2">سایز</h2>
+    <div v-for="(items, filterKey) in filters" :key="filterKey" class="filter-section">
+      <h2 class="me-2">{{ filterKey }}</h2>
       <div class="filter-item">
-        <SelectionComponent :items="sizes" v-model="selected.size" />
+        <SelectionComponent
+          :items="items"
+          :modelValue="selected[filterKey]"
+          @update:modelValue="updateSelected(filterKey, $event)"
+        />
       </div>
+      <hr />
     </div>
-    <hr />
-    <div class="filter-color not-first-filter">
-      <h2 class="me-2">رنگ</h2>
-      <div class="filter-item">
-        <SelectionComponent v-model="selected.color" :items="colors" />
-      </div>
-    </div>
-    <hr />
     <div class="avaiable" dir="rtl">
       <div class="form-check form-switch">
         <input
@@ -44,42 +40,41 @@ import { ref, defineProps, defineEmits } from "vue";
 import SelectionComponent from "./SelectionComponent.vue";
 
 const props = defineProps({
-  colors: {
-    type: Array,
-    required: true,
-  },
-  sizes: {
-    type: Array,
+  filters: {
+    type: Object,
     required: true,
   },
   availableOnly: {
     type: Boolean,
     required: true,
   },
-  onColor: {
-    type: Array,
-    required: false,
-  },
-  onSize: {
-    type: Array,
+  onSelected: {
+    type: Object,
     required: false,
   },
 });
 
-const emit = defineEmits(["update:selected", "update:availableOnly", "applyFilter"]);
+const emit = defineEmits([
+  "update:selected",
+  "update:availableOnly",
+  "applyFilter",
+  "clearFilters",
+]);
 
 const availableOnly = ref(props.availableOnly);
-const selected = ref({
-  color: props.onColor || [],
-  size: props.onSize || [],
-});
+const selected = ref(props.onSelected || {});
 
 const deleteEmitter = () => {
-  emit("update:selected", { color: [], size: [] });
+  emit("clearFilters");
 };
 
 const updateAvailableOnly = () => {
   emit("update:availableOnly", availableOnly.value);
+};
+
+const updateSelected = (filterKey, value) => {
+  selected.value[filterKey] = value;
+  emit("update:selected", selected.value);
 };
 
 const applyFilter = () => {
@@ -128,7 +123,7 @@ const applyFilter = () => {
   margin-top: 2rem;
 }
 .filter-item {
-  width: calc(100% - 4rem);
+  width: 100%;
 }
 
 span:hover {
@@ -144,10 +139,24 @@ hr {
   margin-bottom: 1rem;
   border: 0;
   border-top: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 h2 {
   font-size: 1rem;
+}
+
+.section-name {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
+}
+.section-name :last-child {
+  margin-right: auto;
+  font-weight: 300;
+  line-height: 3.75rem;
+  letter-spacing: -0.00833em;
 }
 
 .filter-button {

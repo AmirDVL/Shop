@@ -1,12 +1,10 @@
 <template>
-  <div class="MenuItem col-xl-auto col-md-3">
+  <div class="MenuItem col-md-auto col-sm-3">
     <a :href="link">{{ text }}</a>
   </div>
 </template>
 
 <script>
-// import { Props } from "vue";
-
 export default {
   props: {
     link: {

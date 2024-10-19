@@ -70,6 +70,8 @@ import MenuItem from "./MenuItem.vue";
 }
 .custom {
   justify-content: space-around;
+  flex-wrap: nowrap;
+  max-width: 100% !important;
 }
 .make-believe {
   display: flex;

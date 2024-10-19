@@ -4,10 +4,6 @@ import { RouterLink, RouterView } from 'vue-router';
 
 <template>
   <div dir="rtl">
-    <nav>
-      <RouterLink to="/">صفحه اصلی</RouterLink>
-      <RouterLink to="/about">درباره ما</RouterLink>
-    </nav>
     <RouterView></RouterView>
   </div>
 </template>

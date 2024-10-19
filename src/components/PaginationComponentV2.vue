@@ -11,6 +11,7 @@
       ellipses
       size="1.5rem"
       :round="true"
+      class="mw-100"
     />
     <slot name="footer" v-bind="{ totalPages }"></slot>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row p-4">
     <header>
       <div class="icon-box col-2">
         <div class="logo">
@@ -274,6 +274,10 @@ header {
   border: 1px solid var(--Neutral-Gray-4, #d6d6d6);
 }
 
+header > * {
+  margin: 0 0.5rem;
+}
+
 .search-bar input {
   position: relative;
   color: var(--red-p, #a72f3b);
@@ -308,6 +312,10 @@ header {
 
 .search-logo svg {
   height: 1.5rem;
+}
+
+h3 {
+  white-space: nowrap;
 }
 .login-cart {
   display: flex;

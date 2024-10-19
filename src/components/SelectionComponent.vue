@@ -25,7 +25,12 @@
               <tbody class="scrollable-tbody">
                 <tr v-for="item in items" :key="item">
                   <td>
-                    <input type="checkbox" :value="item" v-model="modelValue" />
+                    <input
+                      type="checkbox"
+                      :value="item"
+                      :checked="modelValue.includes(item)"
+                      @change="updateModelValue(item, $event.target.checked)"
+                    />
                   </td>
                   <td>{{ item }}</td>
                 </tr>
@@ -39,26 +44,35 @@
 </template>
 
 <script setup>
-import { defineProps, defineModel, ref } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 
 const props = defineProps({
   items: {
     type: Array,
     required: true,
   },
+  modelValue: {
+    type: Array,
+    required: true,
+    default: () => [], // Ensure modelValue is always an array
+  },
 });
 
-const modelValue = defineModel({
-  prop: "modelValue",
-  event: "update:modelValue",
-});
+const emit = defineEmits(["update:modelValue"]);
 
 const accordionId = ref(`accordion-${Math.random().toString(36).substr(2, 9)}`);
+
+const updateModelValue = (item, checked) => {
+  const newValue = checked
+    ? [...props.modelValue, item]
+    : props.modelValue.filter((i) => i !== item);
+  emit("update:modelValue", newValue);
+};
 </script>
 
 <style scoped>
 .table-container {
-  max-height: 8rem;
+  max-height: 8rem; /* Adjust based on the height of 4 rows */
   overflow-y: auto;
 }
 .scrollable-tbody {
