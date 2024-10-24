@@ -72,7 +72,7 @@ const fetchProducts = async (page, sortValue, selectedFilters, available) => {
         id: product.id,
         name: product.attributes.name,
         description: product.attributes.description,
-        price: product.attributes.display_price,
+        price: product.attributes.price,
         image: imageUrl
       };
     });
@@ -204,6 +204,8 @@ onBeforeMount(() => {
               :name="product.name"
               :price="product.price"
               :image="product.image"
+              :id="product.id"
+              :product="product"
             />
           </div>
         </div>

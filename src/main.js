@@ -17,6 +17,8 @@ import "quasar/dist/quasar.css";
 import { ArrowDownIcon, Languages } from "lucide-vue-next";
 
 import router from "./router";
+import HeadComponent from "./components/HeadComponent.vue";
+import MainMenu from "./components/MainMenu.vue";
 
 const app = createApp(App);
 
@@ -35,6 +37,9 @@ app.use(Quasar, {
     lang: langFA,
   },
 });
+
+// app.component("HeadComponent", HeadComponent);
+// app.component("MainMenu", MainMenu);
 
 app.use(router);
 

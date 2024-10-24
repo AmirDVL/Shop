@@ -2,7 +2,7 @@
   <div class="col-sm-6 col-md-4 col-xm-12 flex">
     <div class="my-card">
       <div class="pic">
-        <img :src="image" :alt="name" />
+        <img :src="image" :alt="name" :id="id" />
       </div>
       <div class="info">
         <div class="first-row-card">
@@ -24,11 +24,13 @@
             </span>
           </button>
         </div>
-
         <div class="desc" dir="ltr">
           <!-- <p>{{ description }}</p> -->
           <p class="price">{{ price }} تومان</p>
         </div>
+      </div>
+      <div class="add-to-cart">
+        <button @click="addToCart">افزودن به سبد خرید</button>
       </div>
     </div>
   </div>
@@ -37,7 +39,7 @@
 <script setup>
 import { defineProps } from "vue";
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     required: true,
@@ -54,7 +56,28 @@ defineProps({
     type: String,
     required: true,
   },
+  id: {
+    type: String,
+    required: true,
+  },
+  product: {
+    type: Object,
+    required: true,
+  },
 });
+
+const addToCart = () => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existingProduct = cart.find((item) => item.id === props.id);
+
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    cart.push({ ...props.product, quantity: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
 </script>
 
 <style lang="css" scoped>
@@ -108,6 +131,31 @@ h2 {
   align-items: center;
   width: 100%;
   margin-top: 0.5rem;
+}
+
+.first-row-card svg:hover {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(29%) saturate(5443%) hue-rotate(334deg)
+    brightness(81%) contrast(84%);
+}
+
+.add-to-cart {
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.add-to-cart button {
+  color: #a72f3b;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid #a72f3b;
+  transition: ease-in 0.1s;
+}
+
+.add-to-cart button:hover {
+  background-color: #a72f3b;
+  color: white;
 }
 
 .first-row-card:nth-child(-n + 2) {

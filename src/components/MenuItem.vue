@@ -40,7 +40,6 @@ export default {
   color: inherit;
 }
 .MenuItem a:hover {
-  text-decoration: underline;
   color: red;
 }
 </style>

@@ -158,9 +158,10 @@
           </svg>
         </div>
       </div>
+
       <div class="login-cart col-4">
         <div class="login">
-          <div class="log-icon">
+          <button class="log-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="21"
@@ -177,43 +178,88 @@
                 fill="#434343"
               />
             </svg>
-          </div>
-          <h3 class="sabt">ورود | ثبت نام</h3>
+          </button>
+          <a class="sabt" ref="#">ورود | ثبت نام</a>
         </div>
         <div class="shopping-cart">
-          <div class="cart">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="24"
-              viewBox="0 0 25 24"
-              fill="none"
-            >
-              <path
-                d="M18.69 17.75H8.03999C7.04999 17.75 6.09999 17.33 5.42999 16.6C4.75999 15.87 4.42 14.89 4.5 13.9L5.33 3.94C5.36 3.63 5.24999 3.33001 5.03999 3.10001C4.82999 2.87001 4.54 2.75 4.23 2.75H2.5C2.09 2.75 1.75 2.41 1.75 2C1.75 1.59 2.09 1.25 2.5 1.25H4.24001C4.97001 1.25 5.65999 1.56 6.14999 2.09C6.41999 2.39 6.62 2.74 6.73 3.13H19.22C20.23 3.13 21.16 3.53 21.84 4.25C22.51 4.98 22.85 5.93 22.77 6.94L22.23 14.44C22.12 16.27 20.52 17.75 18.69 17.75ZM6.78 4.62L6 14.02C5.95 14.6 6.14 15.15 6.53 15.58C6.92 16.01 7.45999 16.24 8.03999 16.24H18.69C19.73 16.24 20.67 15.36 20.75 14.32L21.29 6.82001C21.33 6.23001 21.14 5.67001 20.75 5.26001C20.36 4.84001 19.82 4.60999 19.23 4.60999H6.78V4.62Z"
-                fill="#434343"
-              />
-              <path
-                d="M16.75 22.75C15.65 22.75 14.75 21.85 14.75 20.75C14.75 19.65 15.65 18.75 16.75 18.75C17.85 18.75 18.75 19.65 18.75 20.75C18.75 21.85 17.85 22.75 16.75 22.75ZM16.75 20.25C16.47 20.25 16.25 20.47 16.25 20.75C16.25 21.03 16.47 21.25 16.75 21.25C17.03 21.25 17.25 21.03 17.25 20.75C17.25 20.47 17.03 20.25 16.75 20.25Z"
-                fill="#434343"
-              />
-              <path
-                d="M8.75 22.75C7.65 22.75 6.75 21.85 6.75 20.75C6.75 19.65 7.65 18.75 8.75 18.75C9.85 18.75 10.75 19.65 10.75 20.75C10.75 21.85 9.85 22.75 8.75 22.75ZM8.75 20.25C8.47 20.25 8.25 20.47 8.25 20.75C8.25 21.03 8.47 21.25 8.75 21.25C9.03 21.25 9.25 21.03 9.25 20.75C9.25 20.47 9.03 20.25 8.75 20.25Z"
-                fill="#434343"
-              />
-              <path
-                d="M21.5 8.75H9.5C9.09 8.75 8.75 8.41 8.75 8C8.75 7.59 9.09 7.25 9.5 7.25H21.5C21.91 7.25 22.25 7.59 22.25 8C22.25 8.41 21.91 8.75 21.5 8.75Z"
-                fill="#434343"
-              />
-            </svg>
-            <span>0</span>
+          <div class="cart-all">
+            <button class="cart">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
+                fill="none"
+              >
+                <path
+                  d="M18.69 17.75H8.03999C7.04999 17.75 6.09999 17.33 5.42999 16.6C4.75999 15.87 4.42 14.89 4.5 13.9L5.33 3.94C5.36 3.63 5.24999 3.33001 5.03999 3.10001C4.82999 2.87001 4.54 2.75 4.23 2.75H2.5C2.09 2.75 1.75 2.41 1.75 2C1.75 1.59 2.09 1.25 2.5 1.25H4.24001C4.97001 1.25 5.65999 1.56 6.14999 2.09C6.41999 2.39 6.62 2.74 6.73 3.13H19.22C20.23 3.13 21.16 3.53 21.84 4.25C22.51 4.98 22.85 5.93 22.77 6.94L22.23 14.44C22.12 16.27 20.52 17.75 18.69 17.75ZM6.78 4.62L6 14.02C5.95 14.6 6.14 15.15 6.53 15.58C6.92 16.01 7.45999 16.24 8.03999 16.24H18.69C19.73 16.24 20.67 15.36 20.75 14.32L21.29 6.82001C21.33 6.23001 21.14 5.67001 20.75 5.26001C20.36 4.84001 19.82 4.60999 19.23 4.60999H6.78V4.62Z"
+                  fill="#434343"
+                />
+                <path
+                  d="M16.75 22.75C15.65 22.75 14.75 21.85 14.75 20.75C14.75 19.65 15.65 18.75 16.75 18.75C17.85 18.75 18.75 19.65 18.75 20.75C18.75 21.85 17.85 22.75 16.75 22.75ZM16.75 20.25C16.47 20.25 16.25 20.47 16.25 20.75C16.25 21.03 16.47 21.25 16.75 21.25C17.03 21.25 17.25 21.03 17.25 20.75C17.25 20.47 17.03 20.25 16.75 20.25Z"
+                  fill="#434343"
+                />
+                <path
+                  d="M8.75 22.75C7.65 22.75 6.75 21.85 6.75 20.75C6.75 19.65 7.65 18.75 8.75 18.75C9.85 18.75 10.75 19.65 10.75 20.75C10.75 21.85 9.85 22.75 8.75 22.75ZM8.75 20.25C8.47 20.25 8.25 20.47 8.25 20.75C8.25 21.03 8.47 21.25 8.75 21.25C9.03 21.25 9.25 21.03 9.25 20.75C9.25 20.47 9.03 20.25 8.75 20.25Z"
+                  fill="#434343"
+                />
+                <path
+                  d="M21.5 8.75H9.5C9.09 8.75 8.75 8.41 8.75 8C8.75 7.59 9.09 7.25 9.5 7.25H21.5C21.91 7.25 22.25 7.59 22.25 8C22.25 8.41 21.91 8.75 21.5 8.75Z"
+                  fill="#434343"
+                />
+              </svg>
+            </button>
+            <span>{{ numberOf }}</span>
           </div>
-          <h3 class="sabt">سبد خرید</h3>
+          <a class="sabt" href="/cart">سبد خرید</a>
         </div>
       </div>
     </header>
   </div>
 </template>
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
+const numberOf = ref(0);
+
+const updateCartCount = () => {
+  const cart = localStorage.getItem("cart");
+  if (cart) {
+    try {
+      const cartItems = JSON.parse(cart);
+      if (Array.isArray(cartItems)) {
+        numberOf.value = cartItems.reduce((sum, item) => {
+          if (item && item.quantity) {
+            return sum + item.quantity;
+          }
+          return sum;
+        }, 0);
+      } else {
+        numberOf.value = Object.values(cartItems).reduce((sum, item) => {
+          if (item && item.quantity) {
+            return sum + item.quantity;
+          }
+          return sum;
+        }, 0);
+      }
+    } catch (e) {
+      console.error("Error parsing cart data from localStorage", e);
+      numberOf.value = 0;
+    }
+  } else {
+    numberOf.value = 0;
+  }
+};
+
+onMounted(() => {
+  updateCartCount();
+  window.addEventListener("storage", updateCartCount);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("storage", updateCartCount);
+});
+</script>
 
 <style scoped>
 @font-face {
@@ -263,6 +309,15 @@ header {
 .logo {
   height: 3.125rem;
 }
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
 .search-bar {
   display: flex;
   height: 3rem;
@@ -304,7 +359,13 @@ header > * {
 
 .sabt {
   font-size: 0.875rem;
+  font-family: "IRANYekanXVF";
 }
+
+.sabt:hover {
+  color: red;
+}
+
 .search-logo svg:hover {
   cursor: pointer;
 }
@@ -323,7 +384,7 @@ h3 {
 .login-cart {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   flex-shrink: 0;
 }
@@ -340,7 +401,6 @@ h3 {
 }
 
 .log-icon {
-  margin-bottom: 0.5rem;
   margin-left: 0.5rem;
 }
 
@@ -353,13 +413,14 @@ h3 {
   align-items: center;
   padding: 0.725rem;
   text-align: center;
+  justify-content: center;
+  text-align: center;
 }
 .cart {
   display: flex;
   position: relative;
   align-items: center;
   padding: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 .cart svg:hover {
   cursor: pointer;
@@ -368,13 +429,22 @@ h3 {
 .shopping-cart h3 {
   white-space: nowrap;
 }
-.cart span {
+
+.cart-all {
+  position: relative;
+  padding: 0.2rem;
+}
+
+.cart-all span {
   position: absolute;
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   font-family: "IRANYekanXVF";
-  font-size: 0.875rem;
+  font-size: 0.65rem;
+  text-align: center;
   font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
+  font-weight: 700;
   min-width: 0.75em;
   min-height: 0.75em;
   color: var(--red-p, #a72f3b);
@@ -384,5 +454,11 @@ h3 {
   right: 0;
   background: var(--Primary-Tint-5, #dcacb1);
   aspect-ratio: 1;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
 }
 </style>

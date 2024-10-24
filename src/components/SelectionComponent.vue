@@ -10,7 +10,7 @@
           @change="updateModelValue(item, $event.target.checked)"
         />
       </div>
-      <div class="col-10 item-name">
+      <div class="col-10 item-name" @click="updateModelValue(item, !modelValue.includes(item))">
         {{ item }}
       </div>
     </div>
@@ -89,5 +89,6 @@ const updateModelValue = (item, checked) => {
   font-weight: 500;
   font-family: "Roboto";
   font-size: 1rem;
+  cursor: pointer;
 }
 </style>
