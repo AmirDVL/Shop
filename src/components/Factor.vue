@@ -53,19 +53,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import OffCode from "./OffCode.vue";
 import Notice from "./Notice.vue";
 
-const priceSum = ref(0);
+const props = defineProps({
+  priceSum: {
+    type: Number,
+    required: true,
+  },
+});
 
 const prof = ref(2);
-
-const updatePriceSum = () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  priceSum.value = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-};
-updatePriceSum();
 </script>
 
 <style scoped>

@@ -16,11 +16,15 @@ import langFA from "quasar/lang/fa";
 import "quasar/dist/quasar.css";
 import { ArrowDownIcon, Languages } from "lucide-vue-next";
 
+import { createPinia } from "pinia";
+
 import router from "./router";
 import HeadComponent from "./components/HeadComponent.vue";
 import MainMenu from "./components/MainMenu.vue";
 
 const app = createApp(App);
+
+const pinia = createPinia();
 
 app.use(Quasar, {
   components: {
@@ -37,6 +41,8 @@ app.use(Quasar, {
     lang: langFA,
   },
 });
+
+app.use(pinia);
 
 // app.component("HeadComponent", HeadComponent);
 // app.component("MainMenu", MainMenu);

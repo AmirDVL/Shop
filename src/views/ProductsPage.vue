@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref, onBeforeMount, watch } from 'vue';
+import { ref, onBeforeMount, watch, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import HeadComponent from "../components/HeadComponent.vue";
 import MainMenu from "../components/MainMenu.vue";
@@ -8,6 +8,7 @@ import PaginationComponentV2 from '@/components/PaginationComponentV2.vue';
 import SpinnerComponent from '../components/SpinnerComponent.vue';
 import SortItem from '@/components/SortItem.vue';
 import Filter from '@/components/Filter.vue';
+import { useCartStore } from '@/stores/cart';
 
 const router = useRouter();
 const route = useRoute();
@@ -23,6 +24,9 @@ const currentPage = ref(1);
 const filters = ref({});
 const availableOnly = ref(false);
 const selected = ref({});
+const cart = ref(JSON.parse(localStorage.getItem("cart")) || []);
+const cartStore = useCartStore();
+
 
 const options = { method: 'GET' };
 
@@ -142,12 +146,18 @@ watch(route, (newRoute) => {
 onBeforeMount(() => {
   fetchProducts(currentPage.value, sort.value, selected.value, availableOnly.value);
 });
+
+watch(cart, (newCart) => {
+  localStorage.setItem("cart", JSON.stringify(newCart));
+}, { deep: true });
+
+onUnmounted(() => {
+  cartStore.saveCart();
+});
 </script>
 
 <template>
   <div class="container">
-    <HeadComponent />
-    <MainMenu />
     <SpinnerComponent v-if="isLoading" />
     <div class="container" v-else>
       <div class="row">
@@ -206,6 +216,7 @@ onBeforeMount(() => {
               :image="product.image"
               :id="product.id"
               :product="product"
+              :cart="cart"
             />
           </div>
         </div>

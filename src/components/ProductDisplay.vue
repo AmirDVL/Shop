@@ -29,7 +29,18 @@
           <p class="price">{{ price }} تومان</p>
         </div>
       </div>
-      <div class="add-to-cart">
+      <div v-if="quantity > 0" class="add-reduce d-flex">
+        <div class="button-wrapper left-border">
+          <button @click="addItem">+</button>
+        </div>
+        <div class="span-wrapper">
+          <span>{{ quantity }}</span>
+        </div>
+        <div class="button-wrapper right-border">
+          <button @click="reduceItem">-</button>
+        </div>
+      </div>
+      <div v-else class="add-to-cart d-flex align-items-center">
         <button @click="addToCart">افزودن به سبد خرید</button>
       </div>
     </div>
@@ -37,17 +48,14 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+import { useCartStore } from "@/stores/cart";
 
 const props = defineProps({
   name: {
     type: String,
     required: true,
   },
-  // description: {
-  //   type: String,
-  //   required: true,
-  // },
   price: {
     type: String,
     required: true,
@@ -66,17 +74,20 @@ const props = defineProps({
   },
 });
 
+const cartStore = useCartStore();
+
+const quantity = computed(() => cartStore.getItemQuantity(props.id));
+
 const addToCart = () => {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const existingProduct = cart.find((item) => item.id === props.id);
+  cartStore.addToCart(props.product);
+};
 
-  if (existingProduct) {
-    existingProduct.quantity += 1;
-  } else {
-    cart.push({ ...props.product, quantity: 1 });
-  }
+const addItem = () => {
+  cartStore.addToCart(props.product);
+};
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+const reduceItem = () => {
+  cartStore.reduceItem(props.id);
 };
 </script>
 
@@ -106,6 +117,49 @@ const addToCart = () => {
   font-family: "IRANYekanXVF", sans-serif;
   align-items: center;
   box-sizing: border-box;
+}
+
+.span-wrapper {
+  box-sizing: border-box;
+  text-align: center;
+  flex: 1;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  height: 100%;
+  flex: 1;
+}
+
+.left-border {
+  border-left: 1px solid #a72f3b;
+  border-radius: 0;
+}
+
+.right-border {
+  border-right: 1px solid #a72f3b;
+  border-radius: 0;
+}
+
+.add-reduce {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid #a72f3b;
+  border-radius: 0.5rem;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+.add-reduce button {
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
 
 h2 {
@@ -140,12 +194,16 @@ h2 {
 
 .add-to-cart {
   gap: 0.25rem;
+  height: 100%;
   margin-top: 0.5rem;
+  justify-content: center;
+  width: 100%;
 }
 
 .add-to-cart button {
   color: #a72f3b;
-  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  width: 100%;
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;

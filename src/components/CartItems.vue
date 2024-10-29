@@ -15,7 +15,7 @@
               </div>
               <div class="product-info">
                 <p>{{ product.name }}</p>
-                <p>{{ product.price }} تومان</p>
+                <p class="price">{{ product.price }} تومان</p>
               </div>
             </div>
             <div class="add-reduce">
@@ -23,7 +23,7 @@
                 <button @click="addItem">+</button>
               </div>
               <div class="span-wrapper">
-                <span>{{ numberOf }}</span>
+                <span>{{ quantity }}</span>
               </div>
               <div class="button-wrapper right-border">
                 <button @click="reduceItem">-</button>
@@ -47,7 +47,8 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { defineProps, computed } from "vue";
+import { useCartStore } from "@/stores/cart";
 
 const props = defineProps({
   product: {
@@ -56,63 +57,21 @@ const props = defineProps({
   },
 });
 
-const numberOf = ref(props.product.quantity);
+const cartStore = useCartStore();
 
-const updateNumber = () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const item = cart.find((item) => item.id === props.product.id);
-  if (item) {
-    numberOf.value = item.quantity;
-  } else {
-    numberOf.value = 0;
-  }
-};
-
-const emit = defineEmits(["update-cart"]);
+const quantity = computed(() => cartStore.getItemQuantity(props.product.id));
 
 const addItem = () => {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart = cart.map((item) => {
-    if (item.id === props.product.id) {
-      item.quantity += 1;
-    }
-    return item;
-  });
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-  emit("update-cart", cart);
-  updateNumber();
+  cartStore.addToCart(props.product);
 };
 
 const reduceItem = () => {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart = cart
-    .map((item) => {
-      if (item.id === props.product.id) {
-        if (item.quantity > 1) {
-          item.quantity -= 1;
-        } else {
-          return null; // Mark item for removal
-        }
-      }
-      return item;
-    })
-    .filter((item) => item !== null); // Remove items marked for removal
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-  emit("update-cart", cart);
-  updateNumber();
+  cartStore.reduceItem(props.product.id);
 };
 
 const deleteItem = () => {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart = cart.filter((item) => item.id !== props.product.id);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  emit("update-cart", cart);
-  updateNumber();
+  cartStore.deleteItem(props.product.id);
 };
-
-watch(() => props.product.quantity, updateNumber);
 </script>
 
 <style scoped>
@@ -145,6 +104,10 @@ watch(() => props.product.quantity, updateNumber);
   object-fit: contain;
 }
 
+.price {
+  white-space: nowrap;
+}
+
 button {
   background-color: transparent;
   border: none;
@@ -171,7 +134,7 @@ button {
   align-items: center;
   width: 60%;
   justify-content: space-around;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .product-info {

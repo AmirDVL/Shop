@@ -1,20 +1,37 @@
 <template>
   <div class="container">
-    <HeadComponent />
-    <MainMenu />
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <ItemsWrapper />
+          <ItemsWrapper @update-total-price="updateTotalPrice" />
         </div>
         <div class="col-md-4">
-          <Factor />
+          <Factor :priceSum="totalPrice" />
           <!-- <OffCode /> -->
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { useCartStore } from "@/stores/cart";
+import HeadComponent from "@/components/HeadComponent.vue";
+import MainMenu from "@/components/MainMenu.vue";
+import CartItems from "@/components/CartItems.vue";
+import ItemsWrapper from "@/components/ItemsWrapper.vue";
+import Factor from "@/components/Factor.vue";
+import OffCode from "@/components/OffCode.vue";
+
+const cartStore = useCartStore();
+
+const totalPrice = computed(() => cartStore.totalPrice);
+
+const updateTotalPrice = (newTotalPrice) => {
+  totalPrice.value = newTotalPrice;
+};
+</script>
 
 <style scoped>
 @font-face {
@@ -33,12 +50,3 @@
   font-family: "IRANYekanXVF";
 }
 </style>
-
-<script setup>
-import HeadComponent from "@/components/HeadComponent.vue";
-import MainMenu from "@/components/MainMenu.vue";
-import CartItems from "@/components/CartItems.vue";
-import ItemsWrapper from "@/components/ItemsWrapper.vue";
-import Factor from "@/components/Factor.vue";
-import OffCode from "@/components/OffCode.vue";
-</script>

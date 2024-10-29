@@ -5,7 +5,7 @@
       <hr />
     </div>
     <CartItems
-      v-for="product in cart"
+      v-for="product in cartItems"
       :key="product.id"
       :product="product"
       @update-cart="updateCart"
@@ -14,26 +14,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { computed, onMounted } from "vue";
+import { useCartStore } from "@/stores/cart";
 import CartItems from "./CartItems.vue";
 
-const cart = ref([]);
+const cartStore = useCartStore();
 
-const loadCart = () => {
-  cart.value = JSON.parse(localStorage.getItem("cart")) || [];
-};
+const cartItems = computed(() => cartStore.cartItems);
+const totalPrice = computed(() => cartStore.totalPrice);
 
-const saveCart = () => {
-  localStorage.setItem("cart", JSON.stringify(cart.value));
-};
+const emit = defineEmits(["update-total-price"]);
 
 const updateCart = (updatedCart) => {
-  cart.value = updatedCart;
-  saveCart();
+  cartStore.items = updatedCart;
+  cartStore.saveCart();
+  emitTotalPrice();
+};
+
+const emitTotalPrice = () => {
+  emit("update-total-price", totalPrice.value);
 };
 
 onMounted(() => {
-  loadCart();
+  emitTotalPrice();
 });
 </script>
 
